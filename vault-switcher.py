@@ -10,7 +10,7 @@ def read_vault_token_from_file(token_file_path):
     return data
 
 
-def check_if_path_exists(client, mount_point, path):
+def check_path_exists(client, mount_point, path):
     try:
         data = client.secrets.kv.v2.read_secret_version(
             mount_point=mount_point,
@@ -71,8 +71,8 @@ if __name__ == "__main__":
 
     log.info("Authenticated in vault: %s", client.is_authenticated())
 
-    if check_if_path_exists(client, VAULT_MOUNT_POINT, VAULT_SOURCE_PATH):
-        if check_if_path_exists(client, VAULT_MOUNT_POINT, VAULT_DEST_PATH):
+    if check_path_exists(client, VAULT_MOUNT_POINT, VAULT_SOURCE_PATH):
+        if check_path_exists(client, VAULT_MOUNT_POINT, VAULT_DEST_PATH):
             pass
         else:
             duplicate_path_with_new_name(
