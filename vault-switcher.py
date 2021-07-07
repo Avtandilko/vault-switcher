@@ -83,20 +83,20 @@ def duplicate_variables_list(
                 source_path,
             )
 
-        if variables_to_add:
-            for secret in variables_to_add:
-                log.info(
-                    "Add variables %s to the new secret %s/%s",
-                    secret,
-                    mount_point,
-                    dest_path,
-                )
-
-            client.secrets.kv.v2.create_or_update_secret(
-                mount_point=mount_point,
-                path=dest_path,
-                secret=dict(variables_to_add),
+    if variables_to_add:
+        for secret in variables_to_add:
+            log.info(
+                "Add variable %s to the new secret %s/%s",
+                secret,
+                mount_point,
+                dest_path,
             )
+
+    client.secrets.kv.v2.create_or_update_secret(
+        mount_point=mount_point,
+        path=dest_path,
+        secret=dict(variables_to_add),
+    )
 
 
 if __name__ == "__main__":
