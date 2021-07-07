@@ -43,6 +43,59 @@ def duplicate_path_with_new_name(client, mount_point, source_path, dest_path):
     )
 
 
+def duplicate_secrets_list(client, mount_point, source_path, dest_path, secrets_list):
+    read_response = client.secrets.kv.read_secret_version(
+        mount_point=mount_point, path=source_path
+    )
+
+    if secrets_list:
+        log.info(
+            "The following secrets well be duplicated: %s",
+            format(", ".join(map(str, secrets_list))),
+        )
+    else:
+        log.info("Secrets not specified")
+
+    read_response = client.secrets.kv.read_secret_version(
+        mount_point=mount_point,
+        path=source_path,
+    )
+
+    secrets_to_add = {}
+
+    for secret in secrets_list:
+        if secret in read_response["data"]["data"].keys():
+            log.info(
+                "Pre-adding a variable %s to the new secret %s/%s",
+                secret,
+                mount_point,
+                dest_path,
+            )
+            secrets_to_add[secret] = read_response["data"]["data"].get(secret)
+        else:
+            log.info(
+                "There is no predefined variable %s in %s/%s. Skip copy",
+                secret,
+                mount_point,
+                source_path,
+            )
+
+        if secrets_to_add:
+            for secret in secrets_to_add:
+                log.info(
+                    "Add variables %s to the new secret %s/%s",
+                    secret,
+                    mount_point,
+                    dest_path,
+                )
+
+        client.secrets.kv.v2.create_or_update_secret(
+            mount_point=mount_point,
+            path=dest_path,
+            secret=dict(secrets_to_add),
+        )
+
+
 if __name__ == "__main__":
 
     VAULT_ADDR = os.getenv("VAULT_ADDR", "http://127.0.0.1:8200")
@@ -80,3 +133,11 @@ if __name__ == "__main__":
             )
     else:
         log.info("Unknown behavior")
+
+    duplicate_secrets_list(
+        client,
+        VAULT_MOUNT_POINT,
+        VAULT_SOURCE_PATH,
+        VAULT_DEST_PATH,
+        [""],
+    )
