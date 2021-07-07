@@ -1,6 +1,6 @@
 # Usage
 
-Current Docker image: `avtandilko/vault-switcher:v0.0.4`
+Current Docker image: `avtandilko/vault-switcher:v0.0.5`
 
 Environment variables:
 

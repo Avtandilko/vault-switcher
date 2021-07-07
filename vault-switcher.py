@@ -109,7 +109,7 @@ if __name__ == "__main__":
     VAULT_DEST_PATH = os.getenv("VAULT_DEST_PATH")
     DUPLICATE_FULL_SECRET = os.getenv("DUPLICATE_FULL_SECRET", "False").lower()
     DUPLICATE_VARIABLES = os.getenv("DUPLICATE_VARIABLES", "False").lower()
-    VARIABLES_LIST = json.loads(os.getenv("VARIABLES_LIST", '[]'))
+    VARIABLES_LIST = json.loads(os.getenv("VARIABLES_LIST", "[]"))
 
     logging.basicConfig(
         stream=sys.stdout,
@@ -130,13 +130,23 @@ if __name__ == "__main__":
 
     log.info("Authenticated in vault: %s", client.is_authenticated())
 
-    if DUPLICATE_FULL_SECRET not in ('true', '1', 't') and DUPLICATE_VARIABLES not in ('true', '1', 't'):
+    if DUPLICATE_FULL_SECRET not in ("true", "1", "t") and DUPLICATE_VARIABLES not in (
+        "true",
+        "1",
+        "t",
+    ):
         log.error("Set to 'true' DUPLICATE_FULL_SECRET or DUPLICATE_VARIABLES")
 
-    elif DUPLICATE_FULL_SECRET in ('true', '1', 't') and DUPLICATE_VARIABLES in ('true', '1', 't'):
-        log.error("Set to 'true' only one of variables DUPLICATE_FULL_SECRET, DUPLICATE_VARIABLES")
+    elif DUPLICATE_FULL_SECRET in ("true", "1", "t") and DUPLICATE_VARIABLES in (
+        "true",
+        "1",
+        "t",
+    ):
+        log.error(
+            "Set to 'true' only one of variables DUPLICATE_FULL_SECRET, DUPLICATE_VARIABLES"
+        )
 
-    elif DUPLICATE_FULL_SECRET in ('true', '1', 't'):
+    elif DUPLICATE_FULL_SECRET in ("true", "1", "t"):
         if check_path_exists(client, VAULT_MOUNT_POINT, VAULT_SOURCE_PATH):
             if check_path_exists(client, VAULT_MOUNT_POINT, VAULT_DEST_PATH):
                 pass
@@ -147,7 +157,7 @@ if __name__ == "__main__":
         else:
             log.info("Unknown behavior")
 
-    elif DUPLICATE_VARIABLES in ('true', '1', 't'):
+    elif DUPLICATE_VARIABLES in ("true", "1", "t"):
         if check_path_exists(client, VAULT_MOUNT_POINT, VAULT_SOURCE_PATH):
             if check_path_exists(client, VAULT_MOUNT_POINT, VAULT_DEST_PATH):
                 pass
