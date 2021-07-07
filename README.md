@@ -35,6 +35,6 @@ export DUPLICATE_FULL_SECRET = "True"
 ### Scenario: specific variables copy
 
 ```sh
-export DUPLICATE_VARIABLES = '["VAR1", "VAR2", "VAR3"]'
-export VARIABLES_LIST = "True"
+export DUPLICATE_VARIABLES = "True"
+export VARIABLES_LIST = '["VAR1", "VAR2", "VAR3"]'"True"
 ```
