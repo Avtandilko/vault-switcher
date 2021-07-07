@@ -91,11 +91,11 @@ def duplicate_variables_list(
                     dest_path,
                 )
 
-        client.secrets.kv.v2.create_or_update_secret(
-            mount_point=mount_point,
-            path=dest_path,
-            secret=dict(variables_to_add),
-        )
+            client.secrets.kv.v2.create_or_update_secret(
+                mount_point=mount_point,
+                path=dest_path,
+                secret=dict(variables_to_add),
+            )
 
 
 if __name__ == "__main__":
@@ -141,5 +141,5 @@ if __name__ == "__main__":
         VAULT_MOUNT_POINT,
         VAULT_SOURCE_PATH,
         VAULT_DEST_PATH,
-        [""],
+        [],
     )
