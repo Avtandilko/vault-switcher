@@ -43,27 +43,29 @@ def duplicate_path_with_new_name(client, mount_point, source_path, dest_path):
     )
 
 
-def duplicate_secrets_list(client, mount_point, source_path, dest_path, secrets_list):
+def duplicate_variables_list(
+    client, mount_point, source_path, dest_path, variables_list
+):
     read_response = client.secrets.kv.read_secret_version(
         mount_point=mount_point, path=source_path
     )
 
-    if secrets_list:
+    if variables_list:
         log.info(
-            "The following secrets well be duplicated: %s",
-            format(", ".join(map(str, secrets_list))),
+            "The following variables well be duplicated: %s",
+            format(", ".join(map(str, variables_list))),
         )
     else:
-        log.info("Secrets not specified")
+        log.info("Variables not specified")
 
     read_response = client.secrets.kv.read_secret_version(
         mount_point=mount_point,
         path=source_path,
     )
 
-    secrets_to_add = {}
+    variables_to_add = {}
 
-    for secret in secrets_list:
+    for secret in variables_list:
         if secret in read_response["data"]["data"].keys():
             log.info(
                 "Pre-adding a variable %s to the new secret %s/%s",
@@ -71,7 +73,7 @@ def duplicate_secrets_list(client, mount_point, source_path, dest_path, secrets_
                 mount_point,
                 dest_path,
             )
-            secrets_to_add[secret] = read_response["data"]["data"].get(secret)
+            variables_to_add[secret] = read_response["data"]["data"].get(secret)
         else:
             log.info(
                 "There is no predefined variable %s in %s/%s. Skip copy",
@@ -80,8 +82,8 @@ def duplicate_secrets_list(client, mount_point, source_path, dest_path, secrets_
                 source_path,
             )
 
-        if secrets_to_add:
-            for secret in secrets_to_add:
+        if variables_to_add:
+            for secret in variables_to_add:
                 log.info(
                     "Add variables %s to the new secret %s/%s",
                     secret,
@@ -92,7 +94,7 @@ def duplicate_secrets_list(client, mount_point, source_path, dest_path, secrets_
         client.secrets.kv.v2.create_or_update_secret(
             mount_point=mount_point,
             path=dest_path,
-            secret=dict(secrets_to_add),
+            secret=dict(variables_to_add),
         )
 
 
@@ -134,7 +136,7 @@ if __name__ == "__main__":
     else:
         log.info("Unknown behavior")
 
-    duplicate_secrets_list(
+    duplicate_variables_list(
         client,
         VAULT_MOUNT_POINT,
         VAULT_SOURCE_PATH,
