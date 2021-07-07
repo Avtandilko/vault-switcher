@@ -36,5 +36,5 @@ export DUPLICATE_FULL_SECRET = "True"
 
 ```sh
 export DUPLICATE_VARIABLES = "True"
-export VARIABLES_LIST = '["VAR1", "VAR2", "VAR3"]'"True"
+export VARIABLES_LIST = '["VAR1", "VAR2", "VAR3"]'
 ```
