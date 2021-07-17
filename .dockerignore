@@ -19,3 +19,5 @@ coverage.xml
 .pytest_cache
 .hypothesis
 README.md
+pyproject.toml
+.pre-commit-config.yaml
