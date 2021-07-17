@@ -25,7 +25,7 @@ optional arguments:
 
 ## Examples
 
-### Common variables. Should be set always
+### Common variables. Should always be set
 
 ```sh
 export VAULT_ADDR = "https://127.0.0.1:8200"
