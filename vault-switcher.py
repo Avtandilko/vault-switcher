@@ -122,7 +122,7 @@ if __name__ == "__main__":
     )
     log = logging.getLogger()
 
-    # Define anvironment variables
+    # Define environment variables
     VAULT_ADDR = os.getenv("VAULT_ADDR")
     VAULT_TOKEN_FILE = os.getenv("VAULT_TOKEN_FILE")
     VAULT_TOKEN = os.getenv("VAULT_TOKEN")
@@ -252,7 +252,7 @@ if __name__ == "__main__":
             VARIABLES_LIST,
         )
 
-    if args.action == "delete-secret":
+    elif args.action == "delete-secret":
 
         # Checking required environment variables
         if VAULT_MOUNT_POINT is None:
