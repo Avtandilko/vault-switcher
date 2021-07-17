@@ -13,7 +13,7 @@ Current Docker image: `avtandilko/vault-switcher:v0.0.7`
 * `VAULT_SECRET_TO_DELETE`
 * `VARIABLES_LIST`
 
-## Command-line argiments
+## Command-line arguments
 
 ```sh
 usage: vault-switcher.py [-h] -a {clone-secret,clone-variables,delete-secret}
