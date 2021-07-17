@@ -3,6 +3,7 @@ import json
 import os
 import sys
 import logging
+import argparse
 
 
 def read_vault_token_from_file(token_file_path):
@@ -53,7 +54,7 @@ def duplicate_variables_list(
 
     if variables_list:
         log.info(
-            "The following variables well be duplicated: %s",
+            "The following variables will be duplicated: %s",
             format(", ".join(map(str, variables_list))),
         )
     else:
